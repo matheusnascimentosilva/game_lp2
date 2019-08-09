@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
+#include <windows.h>
 
 void cria_fase_2(char **mapa);
 char** desenha_mapa(int dimensao);
