@@ -58,7 +58,8 @@ void imprime_mapa(int dim,char **mapa){
 //==============================
 //FUNÇÃO QUE DESENHA AS PAREDES NO MAPA
 void cria_fase_1(char **mapa){
-
+    //MAPA VERDE E BRANCO
+    system("color 2f");
     mapa[2][2] = 254;
     mapa[2][3] = 254;
     mapa[3][2] = 254;
@@ -236,13 +237,12 @@ void cria_fase_1(char **mapa){
     mapa[17][15] = 254;
     mapa[17][16] = 254;
     mapa[17][17] = 254;
-
-
+    //=================
 
 }
 void cria_fase_2(char **mapa){
+    //MAPA VERMELHO E BRANCO
 	system("color 4f");
-
 	mapa[10][9] = 254;
     mapa[10][10] = 254;
     mapa[11][9] =  254;
