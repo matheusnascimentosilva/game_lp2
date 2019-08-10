@@ -15,7 +15,7 @@ int main(void){
 	int dimensao = 20;
 	char **m;
 	m = desenha_mapa(dimensao);
-	cria_fase_1(m);
+	cria_fase_2(m);
 	imprime_mapa(dimensao,m);
 	libera_espaco(m,dimensao);
 
@@ -155,8 +155,17 @@ void cria_fase_2(char **mapa){
     mapa[11][10] = 254;
     mapa[12][9] = 254;
 	//criando as paredes bloco superior esquerdo
-	mapa[2][2] = 254;
-	mapa[2][3] = 254;
+	mapa[2][6] = 254;
+	mapa[2][7] = 254;
+	mapa[3][6] = 254;
+	mapa[3][7] = 254;
+	mapa[4][6] = 254;
+	mapa[4][7] = 254;
+	mapa[5][6] = 254;
+	mapa[5][7] = 254;
+
+    mapa[2][2] = 254;
+    mapa[2][3] = 254;
 	mapa[2][4] = 254;
 	mapa[3][2] = 254;
 	mapa[3][3] = ' ';
@@ -297,7 +306,12 @@ void cria_fase_2(char **mapa){
 	mapa[17][15] = 254;
 	mapa[17][16] = 254;
 	mapa[17][17] = 254;
+	mapa[14][19] = 254;
+	mapa[14][10] = 254;
 	mapa[14][14] = 254;
+
+	mapa[15][9] = 254;
+	mapa[15][10] = 254;
 	mapa[15][14] = 254;
 	mapa[16][14] = 254;
 	mapa[17][14] = 254;
