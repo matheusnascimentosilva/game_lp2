@@ -3,47 +3,48 @@
 #include <conio.h>
 #include <windows.h>
 
+void cria_fase_1(char **mapa);
 void cria_fase_2(char **mapa);
 char** desenha_mapa(int dimensao);
 void imprime_mapa(int dim,char **mapa);
 void libera_espaco(char **mapa,int dim);
 
 int main(void){
-	
+
 	int Pontos = 0;
 	int dimensao = 20;
 	char **m;
 	m = desenha_mapa(dimensao);
-	cria_fase_2(m);
+	cria_fase_1(m);
 	imprime_mapa(dimensao,m);
 	libera_espaco(m,dimensao);
 
 	return 0;
 }
 
-//FUN«√O QUE CONSTROI O MAPA
-//essa funÁ„o precisa de parametro uma variavel fixa int dimensao = 20;
+//FUN√á√ÉO QUE CONSTROI O MAPA
+//essa fun√ß√£o precisa de parametro uma variavel fixa int dimensao = 20;
 char** desenha_mapa(int dim){
-	
+
 	int i,x;
 	char **mapa;
-	
+
 	mapa = (char**)malloc(dim*sizeof(char*));//alocando uma dimensao do mapa
 		for(x=0;x<dim;x++){
-			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda alocaÁ„o do mapa
+			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda aloca√ß√£o do mapa
 			for(i=0;i<dim;i++){
-				//condiÁ„o que verifica e faz a construÁ„o do mapa
+				//condi√ß√£o que verifica e faz a constru√ß√£o do mapa
 				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
 					mapa[x][i] = 254;
 				}else{
 					mapa[x][i] = '.';
 				}
-		   } 
+		   }
 		}
-	return mapa;	
+	return mapa;
 }
-//FIM DA FUN«√O QUE CRIA O MAPA
-//funÁ„o que imprime o mapa na tela
+//FIM DA FUN√á√ÉO QUE CRIA O MAPA
+//fun√ß√£o que imprime o mapa na tela
 void imprime_mapa(int dim,char **mapa){
 	int i,j;
 	for(i=0;i<dim;i++){
@@ -52,12 +53,107 @@ void imprime_mapa(int dim,char **mapa){
 			printf("%c ",mapa[i][j]);
 		}
 	}
-}	
+}
 
 //==============================
-//FUN«√O QUE DESENHA AS PAREDES NO MAPA
+//FUN√á√ÉO QUE DESENHA AS PAREDES NO MAPA
+void cria_fase_1(char **mapa){
+
+	mapa[2][2] = '*';
+	mapa[2][3] = '*';
+	mapa[2][4] = '*';
+	mapa[2][5] = '*';
+	mapa[2][6] = '*';
+	mapa[2][7] = '*';
+	mapa[2][8] = '*';
+	mapa[2][9] = '*';
+	mapa[2][10] = '*';
+	mapa[2][11] = '*';
+	mapa[2][12] = '*';
+	mapa[2][13] = '*';
+	mapa[2][14] = '*';
+	mapa[2][15] = '*';
+	mapa[2][16] = '*';
+	mapa[2][17] = '*';
+	//----------------
+	mapa[4][3] = '*';
+	mapa[4][4] = '*';
+	mapa[4][5] = '*';
+	mapa[4][6] = '*';
+	mapa[4][7] = '*';
+	mapa[4][8] = '*';
+	mapa[4][9] = '*';
+	mapa[4][10] = '*';
+	mapa[4][11] = '*';
+	mapa[4][12] = '*';
+	mapa[4][13] = '*';
+	mapa[4][14] = '*';
+	mapa[4][15] = '*';
+	mapa[4][16] = '*';
+	mapa[4][17] = '*';
+	//----------------
+	mapa[5][17] = '*';
+	mapa[6][17] = '*';
+	mapa[7][17] = '*';
+	mapa[8][17] = '*';
+	mapa[9][17] = '*';
+	mapa[10][17] = '*';
+	mapa[11][17] = '*';
+	mapa[12][17] = '*';
+	mapa[13][17] = '*';
+	mapa[14][17] = '*';
+	mapa[15][17] = '*';
+	mapa[16][17] = '*';
+	mapa[17][17] = '*';
+    //-----------------
+    mapa[17][17] = '*';
+    mapa[17][16] = '*';
+    mapa[17][15] = '*';
+    mapa[17][14] = '*';
+    mapa[17][13] = '*';
+    mapa[17][12] = '*';
+    mapa[17][11] = '*';
+    mapa[17][10] = '*';
+    mapa[17][9] = '*';
+    mapa[17][8] = '*';
+    mapa[17][7] = '*';
+    mapa[17][6] = '*';
+    mapa[17][5] = '*';
+    mapa[17][4] = '*';
+    mapa[17][3] = '*';
+    //----------------
+    mapa[16][3] = '*';
+    mapa[15][3] = '*';
+    mapa[14][3] = '*';
+    mapa[13][3] = '*';
+    mapa[12][3] = '*';
+    mapa[11][3] = '*';
+    mapa[10][3] = '*';
+    mapa[9][3] = '*';
+    mapa[8][3] = '*';
+    mapa[7][3] = '*';
+    mapa[6][3] = '*';
+    //----------------
+    mapa[6][5] = '*';
+    mapa[6][7] = '*';
+    mapa[6][9] = '*';
+    mapa[6][11] = '*';
+    mapa[6][13] = '*';
+    mapa[6][15] = '*';
+    mapa[8][5] = '*';
+    mapa[8][7] = '*';
+    mapa[8][9] = '*';
+    mapa[8][11] = '*';
+
+}
 void cria_fase_2(char **mapa){
 	system("color 4f");
+
+	mapa[10][9] = 254;
+    mapa[10][10] = 254;
+    mapa[11][9] =  254;
+    mapa[11][10] = 254;
+    mapa[12][9] = 254;
 	//criando as paredes bloco superior esquerdo
 	mapa[2][2] = 254;
 	mapa[2][3] = 254;
@@ -122,7 +218,7 @@ void cria_fase_2(char **mapa){
 	mapa[13][2] = 254;
 	mapa[13][3] = 254;
 	//==============fim
-	//bolocos unit·rios
+	//bolocos unit√°rios
 	mapa[12][7] = 254;
 	mapa[12][12] = 254;
 	//==============fim
@@ -223,14 +319,14 @@ void cria_fase_2(char **mapa){
 	mapa[18][10] = 254;
 	//================fim
 }
-void cria_fase_1(char **mapa){
-		
-}
+
 void cria_fase_boss(char **mapa){
-	
+
 }
 void libera_espaco(char **mapa,int dim){
-		for(int x=0;x<dim;x++)free(mapa[x]);
+		for(int x=0;x<dim;x++){
+			free(mapa[x]);
+		}
 		free(mapa);
 }
 
