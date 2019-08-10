@@ -17,6 +17,10 @@ int main(void){
 	m = desenha_mapa(dimensao);
 	cria_fase_1(m);
 	imprime_mapa(dimensao,m);
+	printf("\n");
+	printf("|--------------------------------------|\n");
+	printf("|             PONTOS: [%d]              |\n",Pontos);
+	printf("|--------------------------------------|n");
 	libera_espaco(m,dimensao);
 
 	return 0;
