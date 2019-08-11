@@ -14,6 +14,13 @@ int main(void){
 	int Pontos = 0;
 	int dimensao = 20;
 	char **m;
+	//TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
+	printf("Carregando mapa: ");
+	for(int x=0;x<100;x++){
+	    Sleep(60);
+            printf("|*|");
+	}
+	// FIM DO CÓDIGO DE CARREGAMENTO
 	m = desenha_mapa(dimensao);
 	cria_fase_1(m);
 	imprime_mapa(dimensao,m);
@@ -434,6 +441,8 @@ void cria_fase_2(char **mapa){
 
 void cria_fase_boss(char **mapa){
 
+    //mapa[][] = 254;
+
 }
 void libera_espaco(char **mapa,int dim){
 		for(int x=0;x<dim;x++){
@@ -441,4 +450,5 @@ void libera_espaco(char **mapa,int dim){
 		}
 		free(mapa);
 }
+
 
