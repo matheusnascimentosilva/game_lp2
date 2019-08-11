@@ -8,21 +8,17 @@ void cria_fase_2(char **mapa);
 char** desenha_mapa(int dimensao);
 void imprime_mapa(int dim,char **mapa);
 void libera_espaco(char **mapa,int dim);
+void tela_carregamento();
 
 int main(void){
 
 	int Pontos = 0;
 	int dimensao = 20;
 	char **m;
-	//TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
-	printf("Carregando mapa: ");
-	for(int x=0;x<100;x++){
-	    Sleep(60);
-            printf("|*|");
-	}
-	// FIM DO CÓDIGO DE CARREGAMENTO
 	m = desenha_mapa(dimensao);
-	cria_fase_1(m);
+	cria_fase_2(m);
+	tela_carregamento();
+	system("cls");
 	imprime_mapa(dimensao,m);
 	/*TRECHO D OCÓDIGO QUE EXIBE A PONTUAÇÃO DO JOGADOR
 	AINDA FALTA IMPLEMETAR COMO VAI FAZER A PONTUAÇÃO.
@@ -453,6 +449,15 @@ void libera_espaco(char **mapa,int dim){
 			free(mapa[x]);
 		}
 		free(mapa);
+}
+void tela_carregamento(){
+    //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
+	printf("Carregando mapa: ");
+	for(int x=0;x<100;x++){
+	    Sleep(60);
+            printf("|*|");
+	}
+	// FIM DO CÓDIGO DE CARREGAMENTO
 }
 
 
