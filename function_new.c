@@ -24,10 +24,14 @@ int main(void){
 	m = desenha_mapa(dimensao);
 	cria_fase_1(m);
 	imprime_mapa(dimensao,m);
+	/*TRECHO D OCÓDIGO QUE EXIBE A PONTUAÇÃO DO JOGADOR
+	AINDA FALTA IMPLEMETAR COMO VAI FAZER A PONTUAÇÃO.
+	*/
 	printf("\n");
 	printf("|--------------------------------------|\n");
 	printf("|             PONTOS: [%d]              |\n",Pontos);
 	printf("|--------------------------------------|n");
+	// FIM DO TRECHO QUE EXIBE A PONTUAÇÃO
 	libera_espaco(m,dimensao);
 
 	return 0;
