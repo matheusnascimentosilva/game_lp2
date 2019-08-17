@@ -7,12 +7,14 @@
 #include<windows.h>
 
 #include<conio.h>
+void come(char **mapa,int x, int y);
 
 void cria_fase_2(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
 void cria_fase_1(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
+void libera_espaco(char **mapa,int dimensao);
 
 char** desenha_mapa(int dimensao);
-
+char** desenha_mapas(int dimensao, char **mapa, int u1, int u2);
 void imprime_mapa(int dim,char **mapa);
 
 void jogador();
@@ -22,7 +24,7 @@ void jogador();
 
 
 int main(void){
-
+int u, u1=0,u2=0;
         srand(time(NULL));
 
         char tecla;
@@ -58,13 +60,14 @@ yc = rand() % 20;
     char **m;
 
 	system("PAUSE");
-
-	while(o==0){
-
-	m = desenha_mapa(dimensao);
-	                                                                         //"tire as / para escolher a fase
-
+// m = desenha_mapa(dimensao);
 	//cria_fase_2(m, x, y, xz, yz, xc, yc);
+	while(o==0){
+            if(u==0){desenha_mapas(dimensao,m, u1, u2);}
+            else{
+        m = desenha_mapa(dimensao);}
+u = 0;	                                                                         //"tire as / para escolher a fas
+	cria_fase_2(m, x, y, xz, yz, xc, yc);
 	//cria_fase_1(m, x, y, xz, yz, xc, yc);
 
 	imprime_mapa(dimensao,m);
@@ -82,7 +85,7 @@ yc = rand() % 20;
 	if(tecla=='w'){
 
 	    if(m[x-1][y]!=(char)254){
-
+                come(m,x,y);
         x--;
 
 	    }
@@ -92,7 +95,7 @@ yc = rand() % 20;
 		if(tecla=='s'){
 
 	    if(m[x+1][y]!=(char)254){
-
+come(m,x,y);
         x++;
 
 	    }
@@ -100,7 +103,7 @@ yc = rand() % 20;
 	}
 
 		if(tecla=='a'){
-
+come(m,x,y);
 	    if(m[x][y-1]!=(char)254){
 
         y--;
@@ -110,7 +113,7 @@ yc = rand() % 20;
 	}
 
 		if(tecla=='d'){
-
+come(m,x,y);
 	    if(m[x][y+1]!=(char)254){
 
         y++;
@@ -124,19 +127,23 @@ yc = rand() % 20;
 	if(xz==xc&&yz==yc){
 
             if(m[xz+1][yz]!=(char)254){
-
+           if(m[xz+1][yz]==' '){u1=1;}
+           if(m[xz+1][yz]=='.'){u1=2;}
         xz++;}else{
 
         if(m[xc-1][yc]!=(char)254){
-
+           if(m[xc-1][yc]==' '){u2=1;}
+           if(m[xc-1][yc]=='.'){u2=2;}
         xc--;}else{
 
         if(m[xc][yc+1]!=(char)254){
-
+           if(m[xc][yc+1]==' '){u2=1;}
+           if(m[xc][yc+1]=='.'){u2=2;}
         yc++;}else{
 
         if(m[xz][yz-1]!=(char)254){
-
+           if(m[xz][yz-1]==' '){u1=1;}
+           if(m[xz][yz-1]=='.'){u1=2;}
         yz--;}
 
         }
@@ -152,19 +159,22 @@ yc = rand() % 20;
             if(m[xz+1][yz]==(char)254){
 
                 if(m[xz][yz+1]==' '||m[xz][yz+1]=='.'){
-
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
                  yz++;
 
                 }else{
 
                 if(m[xz][yz-1]==' '||m[xz][yz-1]=='.'){
-
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
                   yz--;
 
                 }}
 
             }else{
-
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
     xz++;}
 
 
@@ -176,13 +186,15 @@ if(y>yz){
             if(m[xz][yz+1]==(char)254){
 
                 if(m[xz+1][yz]==' '||m[xz+1][yz]=='.'){
-
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
                     xz++;
 
                 }else{
 
                 if(m[xz-1][yz]==' '||m[xz-1][yz]=='.'){
-
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
                     xz--;
 
                 }}
@@ -190,7 +202,8 @@ if(y>yz){
 
 
             }else{
-
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
     yz++;}
 
 
@@ -202,13 +215,15 @@ if(x<xz){
                     if(m[xz-1][yz]==(char)254){
 
                 if(m[xz][yz+1]==' '||m[xz][yz+1]=='.'){
-
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
                     yz++;
 
                 }else{
 
                 if(m[xz][yz-1]==' '||m[xz][yz-1]=='.'){
-
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
                     yz--;
 
                 }}
@@ -216,7 +231,8 @@ if(x<xz){
 
 
             }else{
-
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
     xz--;}
 
 
@@ -228,13 +244,15 @@ if(y<yz){
                         if(m[xz][yz-1]==(char)254){
 
                 if(m[xz+1][yz]==' '||m[xz+1][yz]=='.'){
-
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
                     xz++;
 
                 }else{
 
                 if(m[xz-1][yz]==' '||m[xz-1][yz]=='.'){
-
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
                     xz--;
 
                 }}
@@ -242,13 +260,14 @@ if(y<yz){
 
 
             }else{
-
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
     yz--;}
 
 }
 
 if(x==xz && y==yz){
-
+    libera_espaco(m,dimensao);
     return(0);
 
 }
@@ -261,24 +280,27 @@ if(x==xz && y==yz){
 
 
 
-if(x>xc){
+	if(x>xc){
 
             if(m[xc+1][yc]==(char)254){
 
                 if(m[xc][yc+1]==' '||m[xc][yc+1]=='.'){
-
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
                  yc++;
 
                 }else{
 
                 if(m[xc][yc-1]==' '||m[xc][yc-1]=='.'){
-
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
                   yc--;
 
                 }}
 
             }else{
-
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
     xc++;}
 
 
@@ -290,13 +312,15 @@ if(y>yc){
             if(m[xc][yc+1]==(char)254){
 
                 if(m[xc+1][yc]==' '||m[xc+1][yc]=='.'){
-
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
                     xc++;
 
                 }else{
 
                 if(m[xc-1][yc]==' '||m[xc-1][yc]=='.'){
-
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
                     xc--;
 
                 }}
@@ -304,7 +328,8 @@ if(y>yc){
 
 
             }else{
-
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
     yc++;}
 
 
@@ -316,13 +341,15 @@ if(x<xc){
                     if(m[xc-1][yc]==(char)254){
 
                 if(m[xc][yc+1]==' '||m[xc][yc+1]=='.'){
-
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
                     yc++;
 
                 }else{
 
                 if(m[xc][yc-1]==' '||m[xc][yc-1]=='.'){
-
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
                     yc--;
 
                 }}
@@ -330,7 +357,8 @@ if(x<xc){
 
 
             }else{
-
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
     xc--;}
 
 
@@ -342,13 +370,15 @@ if(y<yc){
                         if(m[xc][yc-1]==(char)254){
 
                 if(m[xc+1][yc]==' '||m[xc+1][yc]=='.'){
-
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
                     xc++;
 
                 }else{
 
                 if(m[xc-1][yc]==' '||m[xc-1][yc]=='.'){
-
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
                     xc--;
 
                 }}
@@ -356,13 +386,14 @@ if(y<yc){
 
 
             }else{
-
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
     yc--;}
 
 }
 
 if(x==xc && y==yc){
-
+    libera_espaco(m,dimensao);
     return(0);
 
 }
@@ -384,7 +415,6 @@ if(x==xc && y==yc){
 	system("cls");
 
 	}
-
 	return 0;
 
 }
@@ -400,9 +430,7 @@ char** desenha_mapa(int dim){
 
 
 	int i,x;
-
 	char **mapa;
-
 
 
 	mapa = (char**)malloc(dim*sizeof(char*));//alocando uma dimensao do mapa
@@ -420,8 +448,9 @@ char** desenha_mapa(int dim){
 					mapa[x][i] = 254;
 
 				}else{
-
-					mapa[x][i] = '.';
+                    if(mapa[x][i]==' '){mapa[x][i] = ' ';}
+                    else{
+					mapa[x][i] = '.';}
 
 				}
 
@@ -431,6 +460,36 @@ char** desenha_mapa(int dim){
 
 	return mapa;
 
+}
+
+char** desenha_mapas(int dim, char **mapa, int u1, int u2){
+
+
+
+	int i,x;
+
+		for(x=0;x<dim;x++){
+
+
+			for(i=0;i<dim;i++){
+
+				//condição que verifica e faz a construção do mapa
+
+				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
+
+					mapa[x][i] = 254;
+
+				}else{
+                    if(mapa[x][i]==' '){mapa[x][i] = ' ';}else{
+                    if(mapa[x][i]=='j'){if(u1==1){mapa[x][i]=' ';}if(u1==2){mapa[x][i]='.';}}
+                    if(mapa[x][i]=='v'){if(u2==1){mapa[x][i]=' ';}if(u2==2){mapa[x][i]='.';}}
+				}
+
+		   }
+
+		}
+
+}
 }
 
 //FIM DA FUNÇÃO QUE CRIA O MAPA
@@ -465,9 +524,39 @@ void cria_fase_2(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
 
 	system("color 4f");
 
-	mapa[2][2] = 254;
+	mapa[10][9] = 254;
 
-	mapa[2][3] = 254;
+    mapa[10][10] = 254;
+
+    mapa[11][9] =  254;
+
+    mapa[11][10] = 254;
+
+    mapa[12][9] = 254;
+
+	//criando as paredes bloco superior esquerdo
+
+	mapa[2][6] = 254;
+
+	mapa[2][7] = 254;
+
+	mapa[3][6] = 254;
+
+	mapa[3][7] = 254;
+
+	mapa[4][6] = 254;
+
+	mapa[4][7] = 254;
+
+	mapa[5][6] = 254;
+
+	mapa[5][7] = 254;
+
+
+
+    mapa[2][2] = 254;
+
+    mapa[2][3] = 254;
 
 	mapa[2][4] = 254;
 
@@ -749,7 +838,17 @@ void cria_fase_2(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
 
 	mapa[17][17] = 254;
 
+	mapa[14][19] = 254;
+
+	mapa[14][10] = 254;
+
 	mapa[14][14] = 254;
+
+
+
+	mapa[15][9] = 254;
+
+	mapa[15][10] = 254;
 
 	mapa[15][14] = 254;
 
@@ -1199,7 +1298,21 @@ void win(int pontos){
 	printf("PONTUACAO: %D\n",pontos);
 
 }
+void libera_espaco(char **mapa,int dim){
+    int x;
 
+		for(x=0;x<dim;x++){
+
+			free(mapa[x]);
+
+		}
+
+		free(mapa);
+
+}
+void come(char **mapa,int x, int y){
+ mapa[x][y] = ' ';
+}
 
 
 /*int inteligencia(int x,int y,int xz,int yz, char **mapa){
