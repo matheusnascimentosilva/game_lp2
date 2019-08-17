@@ -54,7 +54,7 @@ int main(void){
 	printf("|             PONTOS: [%d]              |\n",Pontos);
 	printf("|--------------------------------------|\n");
 	// FIM DO TRECHO QUE EXIBE A PONTUAÇÃO
-	Sleep(100);
+	Sleep(200);
 
 	//aqui
 
@@ -71,7 +71,7 @@ int main(void){
                 Pontos++;
                 m[x][y] = ' ';
                 x--;
-                m[x-1][y] = 'k';
+                m[x-1][y] = 'C';
             }
         }
 	}
@@ -83,7 +83,7 @@ int main(void){
                 Pontos++;
                 m[x][y] = ' ';
                 x++;
-                m[x+1][y] = 'k';
+                m[x+1][y] = 'C';
             }
         }
 	}
@@ -95,7 +95,7 @@ int main(void){
                 Pontos++;
                 m[x][y] = ' ';
                 x--;
-                m[x][y-1] = 'k';
+                m[x][y-1] = 'C';
             }
         }
 	}
@@ -107,7 +107,7 @@ int main(void){
                 Pontos++;
                 m[x][y] = ' ';
                 x++;
-                m[x][y+1] = 'k';
+                m[x][y+1] = 'C';
             }
         }
 	}
@@ -352,8 +352,8 @@ void imprime_mapa(int dim,int x,int y,int xz,int yz,int xc,int yc,char **mapa){
 	int i,j;
 
 	mapa[x][y] = 'C';
-	mapa[xz][yz] = 'M';
-	mapa[xc][yc] = 'A';
+	mapa[xz][yz] = '#';
+	mapa[xc][yc] = '&';
 	system("CLS");
 
 	for(i=0;i<dim;i++){
@@ -942,8 +942,8 @@ void tela_carregamento(){
     //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
 	printf("Carregando mapa: ");
 	for(int x=0;x<100;x++){
-	    Sleep(60);
-            printf("|*|");
+	    Sleep(20);
+            printf("|*|*");
 	}
 	// FIM DO CÓDIGO DE CARREGAMENTO
 }
