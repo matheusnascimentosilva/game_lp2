@@ -5,6 +5,7 @@
 
 void cria_fase_1(char **mapa);
 void cria_fase_2(char **mapa);
+void cria_fase_3(char** mapa);
 char** desenha_mapa(int dimensao);
 void imprime_mapa(int dim,char **mapa);
 void libera_espaco(char **mapa,int dim);
@@ -16,7 +17,7 @@ int main(void){
 	int dimensao = 20;
 	char **m;
 	m = desenha_mapa(dimensao);
-	cria_fase_2(m);
+	cria_fase_3(m);
 	tela_carregamento();
 	system("cls");
 	imprime_mapa(dimensao,m);
@@ -26,7 +27,7 @@ int main(void){
 	printf("\n");
 	printf("|--------------------------------------|\n");
 	printf("|             PONTOS: [%d]              |\n",Pontos);
-	printf("|--------------------------------------|n");
+	printf("|--------------------------------------|\n");
 	// FIM DO TRECHO QUE EXIBE A PONTUAÇÃO
 	libera_espaco(m,dimensao);
 
@@ -53,6 +54,23 @@ char** desenha_mapa(int dim){
 		   }
 		}
 	return mapa;
+}
+//MAPA DOS INIMIGOS
+char **mapa_inimigos(int dim){
+    int i,x;
+    char **mapa_ini;
+    mapa_ini = (char**)malloc(dim*sizeof(char**));
+        for(i=0;i<dim;i++){
+            mapa_ini[i] = (char*)malloc(dim*sizeof(char));
+            for(x=0;x<dim;x++){
+                if(x==0 || x==(dim-1) || i==0 || i==(dim-1)){
+                    mapa_ini[i][x] = 254;
+                }else{
+                    mapa_ini[i][x] = ' ';
+                }
+            }
+        }
+    return mapa_ini;
 }
 //FIM DA FUNÇÃO QUE CRIA O MAPA
 //função que imprime o mapa na tela
@@ -439,9 +457,40 @@ void cria_fase_2(char **mapa){
 	//================fim
 }
 
-void cria_fase_boss(char **mapa){
+void cria_fase_3(char **mapa){
 
-    //mapa[][] = 254;
+    mapa[2][2] = 254;
+    mapa[2][3] = 254;
+    mapa[2][4] = 254;
+    mapa[2][5] = 254;
+    mapa[2][6] = 254;
+    mapa[2][7] = 254;
+    mapa[2][8] = 254;
+    mapa[2][9] = 254;
+    mapa[2][10] = 254;
+    mapa[2][11] = 254;
+    mapa[2][12] = 254;
+    mapa[2][13] = 254;
+    mapa[2][14] = 254;
+    mapa[2][15] = 254;
+    mapa[2][16] = 254;
+    mapa[2][17] = 254;
+    //================
+    mapa[3][17] = 254;
+    mapa[4][17] = 254;
+    mapa[5][17] = 254;
+    mapa[6][17] = 254;
+    mapa[7][17] = 254;
+    mapa[8][17] = 254;
+    mapa[9][17] = 254;
+    mapa[10][17] = 254;
+    mapa[11][17] = 254;
+    mapa[12][17] = 254;
+    mapa[13][17] = 254;
+    mapa[14][17] = 254;
+    mapa[15][17] = 254;
+    mapa[16][17] = 254;
+    mapa[17][17] = 254;
 
 }
 void libera_espaco(char **mapa,int dim){
@@ -459,5 +508,6 @@ void tela_carregamento(){
 	}
 	// FIM DO CÓDIGO DE CARREGAMENTO
 }
+
 
 
