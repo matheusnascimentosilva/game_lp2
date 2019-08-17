@@ -8,9 +8,8 @@ void cria_fase_2(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
 void cria_fase_1(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
 void libera_espaco(char **mapa,int dimensao);
 void tela_carregamento();
-
 char** desenha_mapa(int dimensao);
-void imprime_mapa(int dim,char **mapa);
+void imprime_mapa(int dim,int x,int y,int xz,int yz,int xc,int yc,char **mapa);
 void jogador();
 //int inteliencia(int x, int y, int xz, int yz, char **mapa);
 
@@ -33,18 +32,20 @@ int main(void){
     yz = rand() % 20;
     xc = rand() % 20;
     yc = rand() % 20;
+
 	int dimensao = 20;
 	int Pontos = 0;
+	int pontos_max = 0;
     char **m;
-	system("PAUSE");
-	 tela_carregamento();
-	while(o==0){
-	m = desenha_mapa(dimensao);
-                                                                    //"tire as / para escolher a fase
+    tela_carregamento();
+    system("PAUSE");
+    m = desenha_mapa(dimensao);
 	cria_fase_2(m, x, y, xz, yz, xc, yc);
-
 	//cria_fase_1(m, x, y, xz, yz, xc, yc);
-	imprime_mapa(dimensao,m);
+
+	while(o==0){
+	imprime_mapa(dimensao,x,y,xz,yz,xc,yc,m);
+
 	/*TRECHO D OCÓDIGO QUE EXIBE A PONTUAÇÃO DO JOGADOR
 	AINDA FALTA IMPLEMETAR COMO VAI FAZER A PONTUAÇÃO.
 	*/
@@ -63,31 +64,54 @@ int main(void){
 
 	if(tecla == 'w'|| tecla == 'W'){
         if(m[x-1][y]==(char)254){
+            //continue;
             //não faz nada
         }else{
             if(m[x-1][y] == '.'){
                 Pontos++;
-                m[x][y] == ' ';
+                m[x][y] = ' ';
                 x--;
-                m[x-1][y] == 'k';
+                m[x-1][y] = 'k';
             }
         }
 	}
-		if(tecla=='s'){
-	    if(m[x+1][y]!=(char)254){
-        x++;
-	    }
+	if(tecla == 's'|| tecla == 'S'){
+        if(m[x+1][y]==(char)254){
+            //não faz nada
+        }else{
+            if(m[x+1][y] == '.'){
+                Pontos++;
+                m[x][y] = ' ';
+                x++;
+                m[x+1][y] = 'k';
+            }
+        }
 	}
-		if(tecla=='a'){
-	    if(m[x][y-1]!=(char)254){
-        y--;
-	    }
+	if(tecla == 'a'|| tecla == 'A'){
+        if(m[x][y-1]==(char)254){
+            //não faz nada
+        }else{
+            if(m[x][y-1] == '.'){
+                Pontos++;
+                m[x][y] = ' ';
+                x--;
+                m[x][y-1] = 'k';
+            }
+        }
 	}
-		if(tecla=='d'){
-	    if(m[x][y+1]!=(char)254){
-        y++;
-	    }
+	if(tecla == 'd'|| tecla == 'D'){
+        if(m[x][y+1]==(char)254){
+            //não faz nada
+        }else{
+            if(m[x][y+1] == '.'){
+                Pontos++;
+                m[x][y] = ' ';
+                x++;
+                m[x][y+1] = 'k';
+            }
+        }
 	}
+
 	if(xz==xc&&yz==yc){
         if(m[xz+1][yz]!=(char)254){
             xz++;}else{
@@ -288,87 +312,58 @@ if(x==xc && y==yc){
 
 }
 
-	//inteligencia(x, y, xz, yz, m);
-
-	//aqui
 
 	system("cls");
-
-	imprime_mapa(dimensao,m);
-
+	imprime_mapa(dimensao,x,y,xz,yz,xc,yc,m);
 	system("cls");
-
 	}
 
 	return 0;
 
 }
 
-
-
 //FUNÇÃO QUE CONSTROI O MAPA
-
 //essa função precisa de parametro uma variavel fixa int dimensao = 20;
 
 char** desenha_mapa(int dim){
-
-
-
 	int i,x;
-
 	char **mapa;
-
-
-
 	mapa = (char**)malloc(dim*sizeof(char*));//alocando uma dimensao do mapa
-
 		for(x=0;x<dim;x++){
-
 			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda alocação do mapa
-
 			for(i=0;i<dim;i++){
-
 				//condição que verifica e faz a construção do mapa
-
 				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
-
 					mapa[x][i] = 254;
-
 				}else{
-
 					mapa[x][i] = '.';
 
 				}
-
 		   }
-
 		}
 
 	return mapa;
-
 }
 
 //FIM DA FUNÇÃO QUE CRIA O MAPA
 
-void imprime_mapa(int dim,char **mapa){
+void imprime_mapa(int dim,int x,int y,int xz,int yz,int xc,int yc,char **mapa){
 
 	int i,j;
 
+	mapa[x][y] = 'C';
+	mapa[xz][yz] = 'M';
+	mapa[xc][yc] = 'A';
+	system("CLS");
+
 	for(i=0;i<dim;i++){
-
 		printf("\n");
-
 		for(j=0;j<dim;j++){
-
 			printf("%c ",mapa[i][j]);
 
 		}
-
 	}
-
 }
-
-
 
 //==============================
 
@@ -560,9 +555,9 @@ void cria_fase_2(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
 	mapa[18][10] = 254;
 	//================fim
     // trecho do código que insere os personagens
-    mapa[x][y] = 'k';
-	mapa[xz][yz] = 'j';
-	mapa[xc][yc] = 'v';
+    //mapa[x][y] = 'k';
+	//mapa[xz][yz] = 'j';
+	//mapa[xc][yc] = 'v';
 
 }
 
@@ -929,9 +924,9 @@ void cria_fase_1(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
 
     //=================
     //trecho que insere os personagens no jogo
-    mapa[x][y] = '@';
-	mapa[xz][yz] = '*';
-	mapa[xc][yc] = '*';
+    //mapa[x][y] = 'k';
+	//mapa[xz][yz] = 'v';
+	//mapa[xc][yc] = 'j';
 
 
 }
