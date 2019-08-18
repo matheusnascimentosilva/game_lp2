@@ -14,8 +14,8 @@ int main(void){
 	return 0;
 }
 
-//FUN«√O QUE CONSTROI O MAPA
-//essa funÁ„o precisa de parametro uma variavel fixa int dimensao = 20;
+//FUN√á√ÉO QUE CONSTROI O MAPA
+//essa fun√ß√£o precisa de parametro uma variavel fixa int dimensao = 20;
 char** desenha_mapa(int dim){
 	
 	int i,x;
@@ -23,9 +23,9 @@ char** desenha_mapa(int dim){
 	
 	mapa = (char**)malloc(dim*sizeof(char*));//alocando uma dimensao do mapa
 		for(x=0;x<dim;x++){
-			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda alocaÁ„o do mapa
+			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda aloca√ß√£o do mapa
 			for(i=0;i<dim;i++){
-				//condiÁ„o que verifica e faz a construÁ„o do mapa
+				//condi√ß√£o que verifica e faz a constru√ß√£o do mapa
 				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
 					mapa[x][i] = 254;
 				}else{
@@ -35,8 +35,8 @@ char** desenha_mapa(int dim){
 		}
 	return mapa;	
 }
-//FIM DA FUN«√O QUE CRIA O MAPA
-//funÁ„o que imprime o mapa na tela
+//FIM DA FUN√á√ÉO QUE CRIA O MAPA
+//fun√ß√£o que imprime o mapa na tela
 void imprime_mapa(int dim,char **mapa){
 	int i,j;
 	for(i=0;i<dim;i++){
@@ -48,7 +48,7 @@ void imprime_mapa(int dim,char **mapa){
 }	
 
 //==============================
-//FUN«√O QUE DESENHA AS PAREDES NO MAPA
+//FUN√á√ÉO QUE DESENHA AS PAREDES NO MAPA
 void cria_fase_2(char **mapa){
 	//criando as paredes bloco superior esquerdo
 	mapa[2][2] = 254;
@@ -114,7 +114,7 @@ void cria_fase_2(char **mapa){
 	mapa[13][2] = 254;
 	mapa[13][3] = 254;
 	//==============fim
-	//bolocos unit·rios
+	//bolocos unit√°rios
 	mapa[12][7] = 254;
 	mapa[12][12] = 254;
 	//==============fim
