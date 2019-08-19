@@ -11,17 +11,17 @@ void libera_espaco(char **mapa,int dimensao);
 char** desenha_mapa(int dimensao);
 char** desenha_mapas(int dimensao, char **mapa, int u1, int u2);
 void imprime_mapa(int dim,char **mapa);
+void tela_carregamento();
 void jogador();
-
+int pontos = 0;
 //int inteliencia(int x, int y, int xz, int yz, char **mapa);
 int main(void){
 
+        void tela_carregamento();
         int u, u1=0,u2=0;
         srand(time(NULL));
 
         char tecla;
-        int pontos = 0;
-
         int x;int y;int xz;int yz;int xc;int yc;int o=0;
 
     x = rand() % 20;
@@ -33,10 +33,8 @@ int main(void){
 
 	int dimensao = 20;
     char **m;
-	system("PAUSE");
     // m = desenha_mapa(dimensao);
 	//cria_fase_2(m, x, y, xz, yz, xc, yc);
-
 	while(o==0){
             if(u==0){desenha_mapas(dimensao,m, u1, u2);}
             else{
@@ -44,25 +42,23 @@ int main(void){
     u = 0;
 	cria_fase_2(m, x, y, xz, yz, xc, yc);
 	//cria_fase_1(m, x, y, xz, yz, xc, yc);
-
-	imprime_mapa(dimensao,m);
-
+	imprime_mapa(dimensao,m);printf("DICA: Use as teclas W,A,S,D\n");
 	Sleep(100);
-
-	//aqui
-
+	printf("SCORE: %d",pontos);
 	if(kbhit()){
         tecla = getch();
 	}
 
 	if(tecla=='w'){
 	    if(m[x-1][y]!=(char)254){
+                pontos++;
             come(m,x,y);
             x--;
 	    }
 	}
     if(tecla=='s'){
 	    if(m[x+1][y]!=(char)254){
+                pontos++;
             come(m,x,y);
             x++;
 	    }
@@ -71,6 +67,7 @@ int main(void){
     if(tecla=='a'){
             come(m,x,y);
 	    if(m[x][y-1]!=(char)254){
+                pontos++;
             y--;
 	    }
 	}
@@ -78,6 +75,7 @@ int main(void){
     if(tecla=='d'){
             come(m,x,y);
 	    if(m[x][y+1]!=(char)254){
+                pontos++;
             y++;
 	    }
 	}
@@ -344,7 +342,10 @@ if(x==xc && y==yc){
 	system("cls");
 
 	}
-	printf("PONTUACAO = %d",pontos);
+	system("pause");
+	getch();
+	printf("Sua pontuacao foi: %d",pontos);
+
 	return 0;
 
 }
@@ -796,4 +797,13 @@ void libera_espaco(char **mapa,int dim){
 void come(char **mapa,int x, int y){
         mapa[x][y] = ' ';
 }
-799
+void tela_carregamento(){
+    //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
+	printf("Carregando mapa: ");
+	for(int x=0;x<200;x++){
+	    Sleep(10);
+        printf("%d%\t",x+1);printf("%d%\t",x+2);printf("%d%\t",x+3);
+	}
+	// FIM DO CÓDIGO DE CARREGAMENTO
+}
+
