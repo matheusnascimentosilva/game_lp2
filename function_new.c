@@ -10,10 +10,11 @@ char** desenha_mapa(int dimensao);
 void imprime_mapa(int dim,char **mapa);
 void libera_espaco(char **mapa,int dim);
 void tela_carregamento();
-
+void controle(char **mapa,int x,int y,char tecla,int *pontos);
+void come(char **mapa,int x, int y);
+int Pontos = 0;
 int main(void){
 
-	int Pontos = 0;
 	int dimensao = 20;
 	char **m;
 	m = desenha_mapa(dimensao);
@@ -21,6 +22,8 @@ int main(void){
 	tela_carregamento();
 	system("cls");
 	imprime_mapa(dimensao,m);
+
+
 	/*TRECHO D OCÓDIGO QUE EXIBE A PONTUAÇÃO DO JOGADOR
 	AINDA FALTA IMPLEMETAR COMO VAI FAZER A PONTUAÇÃO.
 	*/
@@ -491,6 +494,21 @@ void cria_fase_3(char **mapa){
     mapa[15][17] = 254;
     mapa[16][17] = 254;
     mapa[17][17] = 254;
+    //=================
+    mapa[4][2] = 254;
+    mapa[5][2] = 254;
+    mapa[6][2] = 254;
+    mapa[7][2] = 254;
+    mapa[7][3] = 254;
+    mapa[7][4] = 254;
+    mapa[7][5] = 254;
+    mapa[6][5] = 254;
+    mapa[5][5] = 254;
+    mapa[5][5] = 254;
+    mapa[4][5] = 254;
+    mapa[4][4] = 254;
+    mapa[4][3] = 254;
+    //===============
 
 }
 void libera_espaco(char **mapa,int dim){
@@ -502,12 +520,46 @@ void libera_espaco(char **mapa,int dim){
 void tela_carregamento(){
     //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
 	printf("Carregando mapa: ");
-	for(int x=0;x<100;x++){
-	    Sleep(60);
-            printf("|*|");
+	for(int x=0;x<200;x++){
+	    Sleep(10);
+        printf("%d%\t",x+1);printf("%d%\t",x+2);printf("%d%\t",x+3);
 	}
 	// FIM DO CÓDIGO DE CARREGAMENTO
 }
+void controle(char **mapa,int x,int y,char tecla,int *pontos){
+    if(tecla=='w'){
+	    if(mapa[x-1][y]!=(char)254){
+                (*pontos)++;
+            come(mapa,x,y);
+            x--;
+	    }
+	}
+    if(tecla=='s'){
+	    if(mapa[x+1][y]!=(char)254){
+                (*pontos)++;
+            come(mapa,x,y);
+            x++;
+	    }
+	}
+    if(tecla=='a'){
+            come(mapa,x,y);
+	    if(mapa[x][y-1]!=(char)254){
+                (*pontos)++;
+            y--;
+	    }
+	}
+    if(tecla=='d'){
+            come(mapa,x,y);
+	    if(mapa[x][y+1]!=(char)254){
+                (*pontos)++;
+            y++;
+	    }
+	}
+}
+void come(char **mapa,int x, int y){
+        mapa[x][y] = ' ';
+}
+
 
 
 
