@@ -1,0 +1,7 @@
+Bem vindos ao Escape,
+para jogar eh bem simples,
+basta utilizar as teclas:
+W = para subir
+S = para descer
+A = para a esquerda
+D = para a direita
