@@ -20,6 +20,7 @@ void menu(char op,char **m,int dimensao);
 void jogador();
 int pontos = 0;
 int fase = 1;
+void game_over();
 
 //int inteliencia(int x, int y, int xz, int yz, char **mapa);
 int main(void){
@@ -796,7 +797,6 @@ while(fase<4){
 	    if(m[x][y+1] ==  '$'){x = 17;y = 0;}
 	    }
 	}
-if(tecla=='p'){pontos++;}
 	if(xz==xc&&yz==yc){
 
         if(m[xz+1][yz]!=(char)254){
@@ -928,6 +928,7 @@ if(tecla=='p'){pontos++;}
 
     if(x==xz && y==yz){
         printf("\n");
+        game_over();
         system("pause");
         libera_espaco(m,dimensao);
 
@@ -1043,6 +1044,7 @@ if(tecla=='p'){pontos++;}
 
 if(x==xc && y==yc){
     printf("\n");
+    game_over();
     system("pause");
     libera_espaco(m,dimensao);
 
@@ -1092,4 +1094,14 @@ void win(){
     printf(".......#....#....#..#....#.     .#.#...#.#..#..#...#.#...\n");
     printf(".......#....######..######.     .#...... #..#..#.... #...\n");
 
+}
+
+void game_over(){
+
+    printf("..######.######.#..... #.######.    #######.#.........#.######..#######..\n");
+    printf("..#......#....#.##... ##.#......    #.....#..#.......#..#.......#.....#..\n");
+    printf("..#......#....#.#..#.#.#.#......    #.....#...#.....#...#.......#######..\n");
+    printf("..#  ###.######.#...#..#.######.    #.....#....#...#....######..#.#......\n");
+    printf("..#....#.#....#.#......#.#......    #.....#.....#.#.....#.......#..#.....\n");
+    printf("..######.#....#.#......#.######.    #######......#......#######.#...#....\n");
 }
