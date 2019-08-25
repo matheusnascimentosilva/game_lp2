@@ -12,26 +12,26 @@ void libera_espaco(char **mapa,int dim);
 void tela_carregamento();
 void controle(char **mapa,int x,int y,char tecla,int *pontos);
 void come(char **mapa,int x, int y);
-int ranking(int pontos,char nome[20]);
-int Pontos = 0;
-struct jogador{
-    char nome[20];
-};
+void titulo();
+void menu(char op,char **m,int dimensao);
+int Pontos = 100;
+
 int main(void){
-struct jogador j;
+
 	int dimensao = 20;
 	char **m;
-	//char n[20];
-	printf("BEM VINDO AO NOSSO GAME!\n");
-	printf("Qual o seu nome ?\n");
-	gets(j.nome);
-	m = desenha_mapa(dimensao);
-	cria_fase_3(m);
-	tela_carregamento();
-	system("cls");
-	imprime_mapa(dimensao,m);
-
-
+	char op;
+	titulo();
+	system("pause");
+	printf("\t\tBem vindo ao ESCAPE\n");
+    printf("\t\tDica as teclas: W,A,S,D para se movimentar no jogo\n");
+    printf("PRESSIONE A TECLA j PARA JOGAR\n");
+    printf("\n");
+    printf("PRESSIONE A TECLA a PARA VER A AJUDA\n");
+    printf("\n");
+    printf("PRESSIONE A TECLA s PARA SAIR\n");
+    scanf("%c",&op);
+    menu(op,m,dimensao);
 	/*TRECHO D OCÓDIGO QUE EXIBE A PONTUAÇÃO DO JOGADOR
 	AINDA FALTA IMPLEMETAR COMO VAI FAZER A PONTUAÇÃO.
 	*/
@@ -40,9 +40,7 @@ struct jogador j;
 	printf("|             PONTOS: [%d]              |\n",Pontos);
 	printf("|--------------------------------------|\n");
 	// FIM DO TRECHO QUE EXIBE A PONTUAÇÃO
-	ranking(Pontos,j.nome);
 	libera_espaco(m,dimensao);
-
 	return 0;
 }
 
@@ -525,6 +523,7 @@ void libera_espaco(char **mapa,int dim){
 			free(mapa[x]);
 		}
 		free(mapa);
+		printf("memoria liberada com sucesso!\n");
 }
 void tela_carregamento(){
     //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
@@ -568,6 +567,49 @@ void controle(char **mapa,int x,int y,char tecla,int *pontos){
 void come(char **mapa,int x, int y){
         mapa[x][y] = ' ';
 }
+void titulo(){
+
+    printf("..######.######.######.#######.#######.#######..\n");
+    printf("..#......#......#......#.....#.#.....#.#........\n");
+    printf("..#......######.#......#.....#.#.....#.#######..\n");
+    printf("..######......#.#......#######.#######.#........\n");
+    printf("..#...........#.#......#.....#.#.......#........\n");
+    printf("..######.######.######.#.....#.#.......#######..\n");
+    printf("\t\t\tVERSION BETA 1.0\n");
+
+}
+void menu(char op,char **m,int dimensao){
+    switch(op){
+    case 'j':
+        m = desenha_mapa(dimensao);
+        cria_fase_1(m);
+        tela_carregamento();
+        system("cls");
+        imprime_mapa(dimensao,m);
+        break;
+    case 'a':
+        {
+        FILE *ajuda;
+        ajuda = fopen("ajuda.txt","r+");
+        if(ajuda == NULL){
+            printf("dados nao encontrados, por favor reinicie o game!\n");
+        }
+        char c[50];
+        while(fgets(c,50,ajuda)!=NULL){
+			printf("%s\n",c);
+		}
+        }
+        break;
+    case 's':
+        exit(0);
+        break;
+    default:
+        printf("opcao nao encontrada!\n");
+        break;
+    }
+}
+
+/* função para criar ranking
 int ranking(int pontos,char nome[20]){
     FILE *rank;
     rank = fopen("rank.txt","w+");
@@ -584,9 +626,7 @@ int ranking(int pontos,char nome[20]){
     }
     return pontos;
 }
-void organiza_rank(){
-
-}
+*/
 
 
 
