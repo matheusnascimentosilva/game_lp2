@@ -1,7 +1,13 @@
-Bem vindos ao Escape,
-para jogar eh bem simples,
-basta utilizar as teclas:
+BEM VINDOS AO ESCAPE,
+
+PARA JOGAR É BEM SIMPLES
+BASTA USAR AS TECLAS:
 W = para subir
 S = para descer
 A = para a esquerda
 D = para a direita
+
+OBS* = USE OS PORTAIS QUE ESTÃO LOCALIZADOS
+EM 4 PARTES DO MAPA, SÃO ESPAÇOS ENTRE A PAREDE
+QUE FÁ QUE O JOGADOR PASSE DE UM LADO PARA 
+O OUTRO DO MAPA.
