@@ -570,7 +570,7 @@ void come(char **mapa,int x, int y){
 }
 int ranking(int pontos,char nome[20]){
     FILE *rank;
-    rank = fopen("rank.txt","w+");
+    rank = fopen("rank.txt","a+");
     if(rank==NULL){
         printf("Problema ao abrir ranking!");
     }else{
@@ -580,8 +580,12 @@ int ranking(int pontos,char nome[20]){
     for(int x=0;x<1;x++){
         fprintf(rank, "%s =====>",nome);
         fprintf(rank,"|%d|",pontos,x+1);
+        fprintf(rank,"\n");
     }
     return pontos;
+}
+void organiza_rank(){
+
 }
 
 
