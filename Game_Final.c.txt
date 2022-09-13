@@ -1,0 +1,1107 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include<windows.h>
+#include<conio.h>
+
+
+void come(char **mapa,int x, int y);
+void cria_fase_2(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
+void cria_fase_1(char **mapa, int x,int y,int xz,int yz, int xc, int yc);
+void cria_fase_3(char** mapa, int x,int y,int xz,int yz, int xc, int yc);
+void libera_espaco(char **mapa,int dimensao);
+char** desenha_mapa(int dimensao);
+char** desenha_mapas(int dimensao, char **mapa, int u1, int u2);
+void imprime_mapa(int dim,char **mapa);
+void tela_carregamento();
+void titulo();
+void win();
+void menu(char op,char **m,int dimensao);
+void jogador();
+int pontos = 0;
+int fase = 1;
+void game_over();
+
+//int inteliencia(int x, int y, int xz, int yz, char **mapa);
+int main(void){
+
+        int dimensao = 20;
+        char portal = '@';
+        char portal2 = '$';
+        char **m;
+        char op;
+
+        titulo();
+        system("pause");
+        tela_carregamento();
+        system("CLS");
+        printf("\t\t\tBEM VINDO AO ESCAPE\n");
+        printf("Dica as teclas: W,A,S,D para se movimentar no jogo\n");
+        printf("\n\n\n");
+        printf("\t########################################\n");
+        printf("\tPRESSIONE A TECLA (J) PARA JOGAR\n");
+        printf("\n");
+        printf("\tPRESSIONE A TECLA (A) PARA VER A AJUDA\n");
+        printf("\n");
+        printf("\tPRESSIONE A TECLA (S) PARA SAIR\n");
+        printf("\t########################################\n");
+        printf("\n\n");
+        scanf("%c",&op);
+        menu(op,m,dimensao);
+
+
+
+    // m = desenha_mapa(dimensao);
+	//cria_fase_2(m, x, y, xz, yz, xc, yc);
+	system("pause");
+	getch();
+
+	return 0;
+
+}
+
+
+
+//FUNÇÃO QUE CONSTROI O MAPA
+
+//essa função precisa de parametro uma variavel fixa int dimensao = 20;
+
+char** desenha_mapa(int dim){
+	int i,x;
+	char **mapa;
+	mapa = (char**)malloc(dim*sizeof(char*));//alocando uma dimensao do mapa
+		for(x=0;x<dim;x++){
+			mapa[x] = (char*)malloc(dim*sizeof(char));//fazendo a segunda alocação do mapa
+			for(i=0;i<dim;i++){
+				//condição que verifica e faz a construção do mapa
+				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
+					mapa[x][i] = 254;
+				}else{
+                    if(mapa[x][i]==' '){mapa[x][i] = ' ';}
+                    else{
+					mapa[x][i] = '.';}
+				}
+		   }
+		}
+	return mapa;
+}
+
+char** desenha_mapas(int dim, char **mapa, int u1, int u2){
+	int i,x;
+		for(x=0;x<dim;x++){
+			for(i=0;i<dim;i++){
+				//condição que verifica e faz a construção do mapa
+				if(i==0 || i==(dim-1) || x==0 || x==(dim-1)){
+					mapa[x][i] = 254;
+					mapa[3][0] = ' ';
+					mapa[3][19] = ' ';
+					mapa[3][-1] = '@';
+					mapa[3][20] = '@';
+					mapa[17][-1] = '$';
+					mapa[17][20] = '$';
+					mapa[17][0] = ' ';
+					mapa[17][19] = ' ';
+
+
+				}else{
+                    if(mapa[x][i]==' '){mapa[x][i] = ' ';}else{
+                    if(mapa[x][i]=='j'){if(u1==1){mapa[x][i]=' ';}if(u1==2){mapa[x][i]='.';}}
+                    if(mapa[x][i]=='v'){if(u2==1){mapa[x][i]=' ';}if(u2==2){mapa[x][i]='.';}}
+				}
+		   }
+		}
+}
+}
+
+//FIM DA FUNÇÃO QUE CRIA O MAPA
+
+void imprime_mapa(int dim,char **mapa){
+	int i,j;
+	for(i=0;i<dim;i++){
+		printf("\n");
+		for(j=0;j<dim;j++){
+                printf("%c ",mapa[i][j]);
+		}
+	}
+}
+
+
+
+//==============================
+
+//FUNÇÃO QUE DESENHA AS PAREDES NO MAPA
+
+void cria_fase_2(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
+	//criando as paredes bloco superior esquerdo
+	system("color 4f");
+	mapa[10][9] = 254;
+    mapa[10][10] = 254;
+    mapa[11][9] =  254;
+    mapa[11][10] = 254;
+    mapa[12][9] = 254;
+	//criando as paredes bloco superior esquerdo
+	mapa[2][6] = 254;
+	mapa[2][7] = 254;
+	mapa[3][6] = 254;
+	mapa[3][7] = 254;
+	mapa[4][6] = 254;
+	mapa[4][7] = 254;
+	mapa[5][6] = 254;
+	mapa[5][7] = 254;
+    mapa[2][2] = 254;
+    mapa[2][3] = 254;
+	mapa[2][4] = 254;
+	mapa[3][2] = 254;
+	mapa[3][3] = ' ';
+	mapa[3][4] = 254;
+	mapa[4][2] = 254;
+	mapa[4][3] = ' ';
+	mapa[4][4] = 254;
+	mapa[5][2] = 254;
+	mapa[5][3] = 254;
+	mapa[5][4] = 254;
+	//==============fim
+	//criando parede na parte superior direita
+	mapa[2][12] = 254;
+	mapa[3][12] = 254;
+	mapa[4][12] = 254;
+	mapa[5][12] = 254;
+	mapa[2][13] = 254;
+	mapa[3][13] = 254;
+	mapa[4][13] = 254;
+	mapa[5][13] = 254;
+	//==============fim
+	//superior direito 2
+	mapa[2][15] = 254;
+	mapa[2][16] = 254;
+	mapa[2][17] = 254;
+	mapa[3][15] = 254;
+	mapa[3][16] = ' ';
+	mapa[3][17] = 254;
+	mapa[4][15] = 254;
+	mapa[4][16] = ' ';
+	mapa[4][17] = 254;
+	mapa[5][15] = 254;
+	mapa[5][16] = 254;
+	mapa[5][17] = 254;
+	//==============fim
+	//superior central beira
+	mapa[1][9] = 254;
+	mapa[2][9] = 254;
+	mapa[3][9] = 254;
+	mapa[4][9] = 254;
+	mapa[5][9] = 254;
+	mapa[1][10] = 254;
+	mapa[2][10] = 254;
+	mapa[3][10] = 254;
+	mapa[4][10] = 254;
+	mapa[5][10] = 254;
+	//==============fim
+	//direita central
+	mapa[7][1] = 254;
+	mapa[7][2] = 254;
+	mapa[7][3] = 254;
+	mapa[8][1] = 254;
+	mapa[9][3] = 254;
+	mapa[10][2] = 254;
+	mapa[10][3] = 254;
+	mapa[11][3] = 254;
+	mapa[12][1] = 254;
+	mapa[13][1] = 254;
+	mapa[13][2] = 254;
+	mapa[13][3] = 254;
+	//==============fim
+	//bolocos unitários
+	mapa[12][7] = 254;
+	mapa[12][12] = 254;
+	//==============fim
+	//esquerdo central
+	mapa[7][16] = 254;
+	mapa[7][17] = 254;
+	mapa[7][18] = 254;
+	mapa[8][18] = 254;
+	mapa[9][16] = 254;
+	mapa[10][16] = 254;
+	mapa[10][17] = 254;
+	mapa[11][16] = 254;
+	mapa[12][18] = 254;
+	mapa[13][18] = 254;
+	mapa[13][17] = 254;
+	mapa[13][16] = 254;
+	//===============fim
+	//central esquerdo
+	mapa[7][5] = 254;
+	mapa[8][5] = 254;
+	mapa[9][5] = 254;
+	mapa[10][5] = 254;
+	mapa[11][5] = 254;
+	mapa[12][5] = 254;
+	mapa[9][6] = 254;
+	mapa[9][7] = 254;
+	mapa[10][6] = 254;
+	mapa[10][7] = 254;
+	//===============fim
+	//central direito
+	mapa[7][14] = 254;
+	mapa[8][14] = 254;
+	mapa[9][14] = 254;
+	mapa[10][14] = 254;
+	mapa[11][14] = 254;
+	mapa[12][14] = 254;
+	mapa[9][13] = 254;
+	mapa[9][12] = 254;
+	mapa[10][13] = 254;
+	mapa[10][12] = 254;
+	//===============fim
+	//superior central
+	mapa[7][7] = 254;
+	mapa[7][8] = 254;
+	mapa[7][9] = 254;
+	mapa[7][10] = 254;
+	mapa[7][11] = 254;
+	mapa[7][12] = 254;
+	mapa[8][9] = 254;
+	mapa[8][10] = 254;
+	mapa[9][9] = 254;
+	mapa[9][10] = 254;
+	//==============fim
+	//inferior esquerdo
+	mapa[15][2] = 254;
+	mapa[15][3] = 254;
+	mapa[15][4] = 254;
+	mapa[16][2] = 254;
+	mapa[16][3] = ' ';
+	mapa[16][4] = ' ';
+	mapa[17][2] = 254;
+	mapa[17][3] = 254;
+	mapa[17][4] = 254;
+	mapa[14][5] = 254;
+	mapa[15][5] = 254;
+	mapa[16][5] = 254;
+	mapa[17][5] = 254;
+	//==============fim
+	//inferior direito
+	mapa[15][15] = 254;
+	mapa[15][16] = 254;
+	mapa[15][17] = 254;
+	mapa[16][15] = ' ';
+	mapa[16][16] = ' ';
+	mapa[16][17] = 254;
+	mapa[17][15] = 254;
+	mapa[17][16] = 254;
+	mapa[17][17] = 254;
+	mapa[14][19] = 254;
+	mapa[14][10] = 254;
+	mapa[14][14] = 254;
+	mapa[15][9] = 254;
+	mapa[15][10] = 254;
+	mapa[15][14] = 254;
+	mapa[16][14] = 254;
+	mapa[17][14] = 254;
+	//===============fim
+	//superior esquerdo 3
+	mapa[16][7] = 254;
+	mapa[17][7] = 254;
+	//===============fim
+	//superior direito 3
+	mapa[16][12] = 254;
+	mapa[17][12] = 254;
+	//===============fim
+	//inferior central beira
+	mapa[16][9] = 254;
+	mapa[17][9] = 254;
+	mapa[18][9] = 254;
+	mapa[16][10] = 254;
+	mapa[17][10] = 254;
+	mapa[18][10] = 254;
+	//================fim
+    mapa[x][y] = 'k';
+	mapa[xz][yz] = 'j';
+	mapa[xc][yc] = 'v';
+}
+
+void cria_fase_1(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
+    //MAPA VERDE E BRANCO
+    system("color 2f");
+    mapa[2][2] = 254;
+    mapa[2][3] = 254;
+    mapa[3][2] = 254;
+    mapa[3][3] = 254;
+    mapa[4][2] = 254;
+    mapa[4][3] = 254;
+    mapa[5][2] = 254;
+    mapa[5][3] = 254;
+    //===============
+    mapa[2][5] = 254;
+    mapa[2][6] = 254;
+    mapa[3][5] = 254;
+    mapa[3][6] = 254;
+    mapa[4][5] = 254;
+    mapa[4][6] = 254;
+    mapa[5][5] = 254;
+    mapa[5][6] = 254;
+    //===============
+    mapa[2][8] = 254;
+    mapa[2][9] = 254;
+    mapa[3][8] = 254;
+    mapa[3][9] = 254;
+    mapa[4][8] = 254;
+    mapa[4][9] = 254;
+    mapa[5][8] = 254;
+    mapa[5][9] = 254;
+    //===============
+    mapa[2][11] = 254;
+    mapa[2][12] = 254;
+    mapa[3][11] = 254;
+    mapa[3][12] = 254;
+    mapa[4][11] = 254;
+    mapa[4][12] = 254;
+    mapa[5][11] = 254;
+    mapa[5][12] = 254;
+    //================
+    mapa[2][14] = 254;
+    mapa[2][15] = 254;
+    mapa[3][14] = 254;
+    mapa[3][15] = 254;
+    mapa[4][14] = 254;
+    mapa[4][15] = 254;
+    mapa[5][14] = 254;
+    mapa[5][15] = 254;
+    //================
+    mapa[2][17] = 254;
+    mapa[2][17] = 254;
+    mapa[3][17] = 254;
+    mapa[3][17] = 254;
+    mapa[4][17] = 254;
+    mapa[4][17] = 254;
+    mapa[5][17] = 254;
+    mapa[5][17] = 254;
+    //================
+    mapa[7][17] = 254;
+    mapa[7][16] = 254;
+    mapa[7][15] = 254;
+    mapa[7][14] = 254;
+    mapa[7][13] = 254;
+    mapa[7][12] = 254;
+    mapa[7][11] = 254;
+    //mapa[7][10] = 254;
+    mapa[7][9] = 254;
+    mapa[7][8] = 254;
+    mapa[7][7] = 254;
+    mapa[7][6] = 254;
+    mapa[7][5] = 254;
+    mapa[7][4] = 254;
+    mapa[7][3] = 254;
+    mapa[7][2] = 254;
+    //===============
+    //mapa[9][10] = 254;
+    mapa[9][11] = 254;
+    mapa[9][12] = 254;
+    mapa[9][13] = 254;
+    mapa[9][14] = 254;
+    mapa[9][15] = 254;
+    mapa[9][16] = 254;
+    mapa[9][17] = 254;
+    //================
+    //mapa[10][10] = 254;
+    mapa[10][11] = 254;
+    mapa[10][12] = 254;
+    mapa[10][13] = 254;
+    mapa[10][14] = 254;
+    mapa[10][15] = 254;
+    mapa[10][16] = 254;
+    mapa[10][17] = 254;
+    //=================
+    mapa[9][2] = 254;
+    mapa[9][3] = 254;
+    mapa[9][4] = 254;
+    mapa[9][5] = 254;
+    mapa[9][6] = 254;
+    mapa[9][7] = 254;
+    mapa[9][8] = 254;
+    mapa[9][9] = 254;
+    //===============
+    mapa[10][2] = 254;
+    mapa[10][3] = 254;
+    mapa[10][4] = 254;
+    mapa[10][5] = 254;
+    mapa[10][6] = 254;
+    mapa[10][7] = 254;
+    mapa[10][8] = 254;
+    mapa[10][9] = 254;
+    //================
+    mapa[12][2] = 254;
+    mapa[13][2] = 254;
+    mapa[14][2] = 254;
+    mapa[15][2] = 254;
+    mapa[12][3] = 254;
+    mapa[13][3] = 254;
+    mapa[14][3] = 254;
+    mapa[15][3] = 254;
+    //================
+    mapa[12][5] = 254;
+    mapa[13][5] = 254;
+    mapa[14][5] = 254;
+    mapa[15][5] = 254;
+    mapa[12][6] = 254;
+    mapa[13][6] = 254;
+    mapa[14][6] = 254;
+    mapa[15][6] = 254;
+    //================
+    mapa[12][8] = 254;
+    mapa[13][8] = 254;
+    mapa[14][8] = 254;
+    mapa[15][8] = 254;
+    mapa[12][9] = 254;
+    mapa[13][9] = 254;
+    mapa[14][9] = 254;
+    mapa[15][9] = 254;
+    //================
+    mapa[12][11] = 254;
+    mapa[13][11] = 254;
+    mapa[14][11] = 254;
+    mapa[15][11] = 254;
+    mapa[12][12] = 254;
+    mapa[13][12] = 254;
+    mapa[14][12] = 254;
+    mapa[15][12] = 254;
+    //=================
+    mapa[12][14] = 254;
+    mapa[13][14] = 254;
+    mapa[14][14] = 254;
+    mapa[15][14] = 254;
+    mapa[12][15] = 254;
+    mapa[13][15] = 254;
+    mapa[14][15] = 254;
+    mapa[15][15] = 254;
+    //=================
+    mapa[12][17] = 254;
+    mapa[13][17] = 254;
+    mapa[14][17] = 254;
+    mapa[15][17] = 254;
+    mapa[12][17] = 254;
+    mapa[13][17] = 254;
+    mapa[14][17] = 254;
+    mapa[15][17] = 254;
+    //=================
+    mapa[17][2] = 254;
+    mapa[17][3] = 254;
+    mapa[17][4] = 254;
+    mapa[17][5] = 254;
+    mapa[17][6] = 254;
+    mapa[17][7] = 254;
+    mapa[17][8] = 254;
+    mapa[17][9] = 254;
+    mapa[17][10] = 254;
+    mapa[17][11] = 254;
+    mapa[17][12] = 254;
+    mapa[17][13] = 254;
+    mapa[17][14] = 254;
+    mapa[17][15] = 254;
+    mapa[17][16] = 254;
+    mapa[17][17] = 254;
+    //=================
+    mapa[x][y] = 'k';
+	mapa[xz][yz] = 'j';
+	mapa[xc][yc] = 'v';
+}
+
+void cria_fase_3(char **mapa, int x, int y, int xz, int yz, int xc, int yc){
+    system("color Df");
+    mapa[0][1] = 254;
+    mapa[2][1] = 254;
+    mapa[2][2] = 254;
+    mapa[2][3] = 254;
+    mapa[2][4] = 254;
+    mapa[2][5] = 254;
+    mapa[2][6] = 254;
+    mapa[2][7] = 254;
+    mapa[2][8] = 254;
+    mapa[2][9] = 254;
+    mapa[2][10] = 254;
+    mapa[2][11] = 254;
+    mapa[2][12] = 254;
+    mapa[2][13] = 254;
+    mapa[2][14] = 254;
+    mapa[2][16] = 254;
+    mapa[2][17] = 254;
+    //================
+    mapa[3][17] = 254;
+    mapa[4][17] = 254;
+    mapa[5][17] = 254;
+    mapa[6][17] = 254;
+    mapa[7][17] = 254;
+    mapa[8][17] = 254;
+    mapa[9][17] = 254;
+    mapa[10][17] = 254;
+    mapa[12][17] = 254;
+    mapa[13][17] = 254;
+    mapa[14][17] = 254;
+    mapa[15][17] = 254;
+    mapa[16][17] = 254;
+    mapa[17][17] = 254;
+    //=================
+    mapa[17][16] = 254;
+    mapa[17][15] = 254;
+    mapa[17][14] = 254;
+    mapa[17][13] = 254;
+    mapa[17][11] = 254;
+    mapa[17][10] = 254;
+    mapa[17][9] = 254;
+    mapa[17][8] = 254;
+    mapa[17][7] = 254;
+    mapa[17][6] = 254;
+    mapa[17][5] = 254;
+    mapa[17][4] = 254;
+    mapa[17][3] = 254;
+    mapa[17][1] = 254;
+    //================
+    mapa[16][1] = 254;
+    mapa[15][1] = 254;
+    mapa[14][1] = 254;
+    mapa[13][1] = 254;
+    mapa[12][1] = 254;
+    mapa[11][1] = 254;
+    mapa[18][1] = 254;
+    mapa[10][1] = 254;
+    mapa[9][1] = 254;
+    mapa[8][1] = 254;
+    mapa[7][1] = 254;
+    mapa[6][1] = 254;
+    mapa[5][1] = 254;
+    mapa[4][1] = 254;
+    //================
+    mapa[4][2] = 254;
+    mapa[4][3] = 254;
+    mapa[4][4] = 254;
+    mapa[4][5] = 254;
+    mapa[4][6] = 254;
+    mapa[4][7] = 254;
+    mapa[4][9] = 254;
+    mapa[4][10] = 254;
+    mapa[4][11] = 254;
+    mapa[4][12] = 254;
+    mapa[4][13] = 254;
+    mapa[4][14] = 254;
+    mapa[4][15] = 254;
+    //================
+    mapa[5][15] = 254;
+    mapa[6][15] = 254;
+    mapa[7][15] = 254;
+    mapa[8][15] = 254;
+    mapa[9][15] = 254;
+    mapa[10][15] = 254;
+    mapa[11][15] = 254;
+    mapa[12][15] = 254;
+    mapa[13][15] = 254;
+    mapa[15][15] = 254;
+    //=================
+    mapa[15][14] = 254;
+    mapa[15][13] = 254;
+    mapa[15][12] = 254;
+    mapa[15][11] = 254;
+    mapa[15][10] = 254;
+    mapa[15][9] = 254;
+    mapa[15][8] = 254;
+    mapa[15][6] = 254;
+    mapa[15][5] = 254;
+    mapa[15][4] = 254;
+    mapa[15][3] = 254;
+    //=================
+    mapa[14][3] = 254;
+    mapa[13][3] = 254;
+    mapa[12][3] = 254;
+    mapa[11][3] = 254;
+    mapa[10][3] = 254;
+    mapa[8][3] = 254;
+    mapa[7][3] = 254;
+    mapa[6][3] = 254;
+    //================
+    mapa[6][4] = 254;
+    mapa[6][5] = 254;
+    mapa[6][6] = 254;
+    mapa[6][7] = 254;
+    mapa[6][8] = 254;
+    mapa[6][9] = 254;
+    mapa[6][11] = 254;
+    mapa[6][12] = 254;
+    mapa[6][13] = 254;
+    //================
+    mapa[7][13] = 254;
+    mapa[8][13] = 254;
+    mapa[9][13] = 254;
+    mapa[10][13] = 254;
+    mapa[12][13] = 254;
+    mapa[13][13] = 254;
+    //=================
+    mapa[13][12] = 254;
+    mapa[13][11] = 254;
+    mapa[13][10] = 254;
+    mapa[13][9] = 254;
+    mapa[13][7] = 254;
+    mapa[13][6] = 254;
+    mapa[13][5] = 254;
+    //=================
+    mapa[12][5] = 254;
+    mapa[11][5] = 254;
+    mapa[10][5] = 254;
+    mapa[9][5] = 254;
+    mapa[7][5] = 254;
+    mapa[7][4] = 254;
+    //===============
+    mapa[7][6] = 254;
+    mapa[7][7] = 254;
+    mapa[7][8] = 254;
+    mapa[7][9] = 254;
+    //===============
+    mapa[9][6] = 254;
+    mapa[9][7] = 254;
+    mapa[9][8] = 254;
+    mapa[9][9] = 254;
+    mapa[9][10] = 254;
+    mapa[9][11] = 254;
+    //===============
+    //mapa[10][11] = 254;
+    mapa[11][11] = 254;
+    //================
+    mapa[11][10] = 254;
+    mapa[11][9] = 254;
+    mapa[11][8] = 254;
+    mapa[11][7] = 254;
+    mapa[x][y] = 'k';
+	mapa[xz][yz] = 'j';
+	mapa[xc][yc] = 'v';
+}
+
+void libera_espaco(char **mapa,int dim){
+    int x;
+		for(x=0;x<dim;x++){
+			free(mapa[x]);
+		}
+		free(mapa);
+}
+void come(char **mapa,int x, int y){
+        mapa[x][y] = ' ';
+}
+void tela_carregamento(){
+    //TRECHO DE CÓDIGO QUE SIMULA UMA TELA DE CARREGAMENTO.
+	printf("Carregando mapa: ");
+	int x;
+	for(x=0;x<200;x++){
+	    Sleep(10);
+        printf("%d%\t",x+1);printf("%d%\t",x+2);printf("%d%\t",x+3);
+	}
+	// FIM DO CÓDIGO DE CARREGAMENTO
+}
+void titulo(){
+
+    printf("..######.######.######.#######.#######.#######..\n");
+    printf("..#......#......#......#.....#.#.....#.#........\n");
+    printf("..#......######.#......#.....#.#.....#.#######..\n");
+    printf("..######......#.#......#######.#######.#........\n");
+    printf("..#...........#.#......#.....#.#.......#........\n");
+    printf("..######.######.######.#.....#.#.......#######..\n");
+    printf("\t\t\tVERSION BETA 1.0\n");
+
+}
+void menu(char op,char **m,int dimensao){
+    char tecla;
+    int x;int y;int xz;int yz;int xc;int yc;int o=0;
+    int u, u1=0,u2=0;
+        srand(time(NULL));
+
+    x = 18;
+    y = 18;
+    xz = 1;
+    yz = 1;
+    xc = 1;
+    yc = 18;
+    switch(op){
+    case 'j':
+        {
+while(fase<4){
+        int f, g;
+        while(o==0){
+        if(u==0){desenha_mapas(dimensao,m, u1, u2);}
+        else{m = desenha_mapa(dimensao);}
+    u = 0;
+	if(fase==2){cria_fase_2(m, x, y, xz, yz, xc, yc);}
+	if(fase==1){cria_fase_1(m, x, y, xz, yz, xc, yc);}
+	if(fase==3){cria_fase_3(m, x, y, xz, yz, xc, yc);}
+	if(pontos==120){
+    x = 18;
+    y = 18;
+    xz = 1;
+    yz = 1;
+    xc = 1;
+    yc = 18;
+    fase = 2;if(fase == 2|| fase == 3){for(f=0;f<20;f++){for(g=0;g<20;g++){m[f][g] = '.';}}}}
+	if(pontos==240){
+    x = 10;
+    y = 8;
+    xz = 1;
+    yz = 1;
+    xc = 18;
+    yc = 18;
+    fase = 3;if(fase == 2|| fase == 3){for(f=0;f<20;f++){for(g=0;g<20;g++){m[f][g] = '.';}}}}
+	if(pontos==360){fase = 4;win();system("PAUSE");libera_espaco(m,dimensao);return(0);}
+	imprime_mapa(dimensao,m);printf("DICA: Use as teclas W,A,S,D\n");
+	Sleep(100);
+	printf("SCORE: %d",pontos);
+	if(kbhit()){
+        tecla = getch();
+	}
+
+	if(tecla=='w'){
+	    if(m[x-1][y]!=(char)254){
+                            if(m[x-1][y]=='.'){pontos++;}
+            come(m,x,y);
+            x--;
+            if(m[x-1][y] ==  '@'){if(x==3&&y==19){x = 3;y = 0;}if(x==3&&y==0){x=3;y=19;}
+	    }
+	    if(m[x-1][y] ==  '$'){if(x==17&&y==19){x = 17;y = 0;}if(x==17&&y==0){x=17;y=19;}
+	    }
+	}
+	}
+    if(tecla=='s'){
+	    if(m[x+1][y]!=(char)254){
+            if(m[x+1][y]=='.'){pontos++;}
+            come(m,x,y);
+            x++;
+            if(m[x+1][y] ==  '@'){if(x==3&&y==19){x = 3;y = 0;}if(x==3&&y==0){x=3;y=19;}
+	    }
+	    if(m[x+1][y] ==  '$'){if(x==17&&y==19){x = 17;y = 0;}if(x==17&&y==0){x=17;y=19;}
+	    }
+	    }
+	}
+
+    if(tecla=='a'){
+	    if(m[x][y-1]!=(char)254){
+                            if(m[x][y-1]=='.'){pontos++;}
+                    come(m,x,y);
+            y--;
+            if(m[x][y-1] ==  '@'){if(x==3&&y==19){x = 3;y = 0;}if(x==3&&y==0){x=3;y=19;}
+	    }
+	        if(m[x][y-1] ==  '$'){if(x==17&&y==19){x = 17;y = 0;}if(x==17&&y==0){x=17;y=19;}
+	    }
+	    }
+	}
+
+    if(tecla=='d'){
+	    if(m[x][y+1]!=(char)254){
+                                            if(m[x][y+1]=='.'){pontos++;}
+                    come(m,x,y);
+            y++;
+            if(m[x][y+1] ==  '@'){x = 3;y = 0;}
+
+	    if(m[x][y+1] ==  '$'){x = 17;y = 0;}
+	    }
+	}
+	if(xz==xc&&yz==yc){
+
+        if(m[xz+1][yz]!=(char)254){
+            if(m[xz+1][yz]==' '){u1=1;}
+                if(m[xz+1][yz]=='.'){u1=2;}
+                    xz++;}else{
+
+        if(m[xc-1][yc]!=(char)254){
+           if(m[xc-1][yc]==' '){u2=1;}
+                if(m[xc-1][yc]=='.'){u2=2;}
+                    xc--;}else{
+
+        if(m[xc][yc+1]!=(char)254){
+            if(m[xc][yc+1]==' '){u2=1;}
+                if(m[xc][yc+1]=='.'){u2=2;}
+                    yc++;}
+                    else{
+
+        if(m[xz][yz-1]!=(char)254){
+            if(m[xz][yz-1]==' '){u1=1;}
+                if(m[xz][yz-1]=='.'){u1=2;}
+                    yz--;}
+        }
+        }
+        }
+	}
+
+	if(x>xz){
+
+            if(m[xz+1][yz]==(char)254){
+                if(m[xz][yz+1]==' '||m[xz][yz+1]=='.'){
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
+                   yz++;
+
+                }else{
+
+                if(m[xz][yz-1]==' '||m[xz][yz-1]=='.'){
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
+                   yz--;
+
+                }}
+
+            }else{
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
+                   xz++;}
+
+
+
+            }else{
+
+            if(y>yz){
+
+            if(m[xz][yz+1]==(char)254){
+
+                if(m[xz+1][yz]==' '||m[xz+1][yz]=='.'){
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
+                   xz++;
+
+                }else{
+
+                if(m[xz-1][yz]==' '||m[xz-1][yz]=='.'){
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
+                   xz--;
+                }}
+
+            }else{
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
+                   yz++;}
+
+
+
+            }else{
+
+            if(x<xz){
+
+                if(m[xz-1][yz]==(char)254){
+
+                if(m[xz][yz+1]==' '||m[xz][yz+1]=='.'){
+                   if(m[xz][yz+1]==' '){u1=1;}
+                   if(m[xz][yz+1]=='.'){u1=2;}
+                   yz++;
+
+                }else{
+
+                if(m[xz][yz-1]==' '||m[xz][yz-1]=='.'){
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
+                   yz--;
+
+                }}
+
+               }else{
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
+                   xz--;}
+
+               }else{
+
+               if(y<yz){
+
+                if(m[xz][yz-1]==(char)254){
+
+                if(m[xz+1][yz]==' '||m[xz+1][yz]=='.'){
+                   if(m[xz+1][yz]==' '){u1=1;}
+                   if(m[xz+1][yz]=='.'){u1=2;}
+                   xz++;
+
+                }else{
+
+                if(m[xz-1][yz]==' '||m[xz-1][yz]=='.'){
+                   if(m[xz-1][yz]==' '){u1=1;}
+                   if(m[xz-1][yz]=='.'){u1=2;}
+                   xz--;
+
+                }}
+
+               }else{
+                   if(m[xz][yz-1]==' '){u1=1;}
+                   if(m[xz][yz-1]=='.'){u1=2;}
+                   yz--;}
+
+               }
+
+    if(x==xz && y==yz){
+        printf("\n");
+        game_over();
+        system("pause");
+        libera_espaco(m,dimensao);
+
+}
+
+}
+
+}
+
+}
+
+	if(x>xc){
+
+            if(m[xc+1][yc]==(char)254){
+
+                if(m[xc][yc+1]==' '||m[xc][yc+1]=='.'){
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
+                   yc++;
+
+                }else{
+
+                if(m[xc][yc-1]==' '||m[xc][yc-1]=='.'){
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
+                   yc--;
+
+                }}
+
+            }else{
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
+                   xc++;}
+
+            }else{
+
+            if(y>yc){
+
+            if(m[xc][yc+1]==(char)254){
+
+                if(m[xc+1][yc]==' '||m[xc+1][yc]=='.'){
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
+                   xc++;
+
+                }else{
+
+                if(m[xc-1][yc]==' '||m[xc-1][yc]=='.'){
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
+                   xc--;
+
+                }}
+
+               }else{
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
+               yc++;}
+
+               }else{
+
+               if(x<xc){
+
+                if(m[xc-1][yc]==(char)254){
+
+                if(m[xc][yc+1]==' '||m[xc][yc+1]=='.'){
+                   if(m[xc][yc+1]==' '){u2=1;}
+                   if(m[xc][yc+1]=='.'){u2=2;}
+                   yc++;
+
+                }else{
+
+                if(m[xc][yc-1]==' '||m[xc][yc-1]=='.'){
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
+                   yc--;
+
+                }}
+
+            }else{
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
+                   xc--;}
+
+
+
+            }else{
+
+            if(y<yc){
+
+                if(m[xc][yc-1]==(char)254){
+
+                if(m[xc+1][yc]==' '||m[xc+1][yc]=='.'){
+                   if(m[xc+1][yc]==' '){u2=1;}
+                   if(m[xc+1][yc]=='.'){u2=2;}
+                   xc++;
+
+                }else{
+
+                if(m[xc-1][yc]==' '||m[xc-1][yc]=='.'){
+                   if(m[xc-1][yc]==' '){u2=1;}
+                   if(m[xc-1][yc]=='.'){u2=2;}
+                   xc--;
+
+                }}
+
+            }else{
+                   if(m[xc][yc-1]==' '){u2=1;}
+                   if(m[xc][yc-1]=='.'){u2=2;}
+                   yc--;}
+
+           }
+
+if(x==xc && y==yc){
+    printf("\n");
+    game_over();
+    system("pause");
+    libera_espaco(m,dimensao);
+
+
+}
+
+}
+
+}
+
+}
+	system("cls");
+	imprime_mapa(dimensao,m);
+
+	system("cls");
+        }
+	}
+        }
+        break;
+    case 'a':
+        {
+        FILE *ajuda;
+        ajuda = fopen("ajuda.txt","r+");
+        if(ajuda == NULL){
+            printf("dados nao encontrados, por favor reinicie o game!\n");
+        }
+        char c[50];
+        while(fgets(c,50,ajuda)!=NULL){
+			printf("%s\n",c);
+		}
+        }
+        break;
+    case 's':
+        exit(0);
+        break;
+    default:
+        printf("opcao nao encontrada!\n");
+        break;
+    }
+}
+//FUNÇÃO YOU WIN
+void win(){
+
+    printf(".....#...#..######..#....#.     .#.......#..#..#.....#...\n");
+    printf("......#.#...#....#..#....#.     .#...#...#..#..#.#...#...\n");
+    printf(".......#....#....#..#....#.     .#..#.#..#..#..#..#..#...\n");
+    printf(".......#....#....#..#....#.     .#.#...#.#..#..#...#.#...\n");
+    printf(".......#....######..######.     .#...... #..#..#.... #...\n");
+
+}
+
+void game_over(){
+
+    printf("..######.######.#..... #.######.    #######.#.........#.######..#######..\n");
+    printf("..#......#....#.##... ##.#......    #.....#..#.......#..#.......#.....#..\n");
+    printf("..#......#....#.#..#.#.#.#......    #.....#...#.....#...#.......#######..\n");
+    printf("..#  ###.######.#...#..#.######.    #.....#....#...#....######..#.#......\n");
+    printf("..#....#.#....#.#......#.#......    #.....#.....#.#.....#.......#..#.....\n");
+    printf("..######.#....#.#......#.######.    #######......#......#######.#...#....\n");
+}
